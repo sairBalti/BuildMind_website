@@ -15,7 +15,7 @@ function Contact() {
         </p>
         <Link
           to="/request-demo"
-          className="mt-6 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+          className="mt-6 inline-flex min-h-12 items-center justify-center rounded-lg bg-blue-600 px-5 text-sm font-semibold leading-none text-white transition hover:bg-blue-700"
         >
           Request Demo
         </Link>

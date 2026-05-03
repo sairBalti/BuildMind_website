@@ -39,16 +39,16 @@ function Home() {
             and public transport teams optimize routes, cut costs, and increase safety in one
             connected platform.
           </p>
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href="#solutions"
-              className="rounded-lg bg-white px-5 py-3 text-sm font-semibold text-blue-700 transition hover:bg-blue-50"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-white px-5 text-sm font-semibold leading-none text-blue-700 transition hover:bg-blue-50"
             >
               Explore Platform
             </a>
             <Link
               to="/request-demo"
-              className="rounded-lg border border-blue-200 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-blue-200 px-5 text-sm font-semibold leading-none text-white transition hover:bg-blue-500"
             >
               Request Demo
             </Link>

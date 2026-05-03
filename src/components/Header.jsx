@@ -32,19 +32,19 @@ function Header() {
         <div className="flex items-center gap-3">
           <a
             href={loginUrl}
-            className="text-sm font-semibold text-slate-700 transition hover:text-blue-600"
+            className="inline-flex h-10 items-center px-2 text-sm font-semibold leading-none text-slate-700 transition hover:text-blue-600"
           >
             Log in
           </a>
           <Link
             to="/request-demo"
-            className="hidden rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-400 md:block"
+            className="hidden h-10 items-center justify-center rounded-lg border border-slate-300 px-4 text-sm font-semibold leading-none text-slate-700 transition hover:border-slate-400 md:inline-flex"
           >
             Request Demo
           </Link>
           <Link
             to="/"
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+            className="inline-flex h-10 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-semibold leading-none text-white transition hover:bg-blue-700"
           >
             Get Started
           </Link>
