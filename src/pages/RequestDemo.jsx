@@ -1,17 +1,27 @@
-import { useState } from "react";
-import { businessTypes } from "../data/siteContent";
+import { useRef, useState } from "react";
+
+const categoryOptions = ["All", "Sector Focus", "Legal Structure"];
+
+const inputClass =
+  "mt-1 h-10 w-full rounded-lg border border-bm-border bg-bm-bg px-3 text-sm text-white focus:border-bm-accent focus:outline-none";
+
+const textareaClass =
+  "mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-sm text-white focus:border-bm-accent focus:outline-none";
 
 const initialFormData = {
   fullName: "",
   email: "",
+  phone: "",
   companyName: "",
-  businessType: businessTypes[0],
+  category: categoryOptions[0],
+  branchCount: "",
   teamSize: "",
   preferredDate: "",
   goals: "",
 };
 
 function RequestDemo() {
+  const preferredDateInputRef = useRef(null);
   const [formData, setFormData] = useState(initialFormData);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -33,18 +43,32 @@ function RequestDemo() {
     setFormData((previous) => ({ ...previous, [name]: value }));
   };
 
+  const openPreferredDatePicker = () => {
+    const input = preferredDateInputRef.current;
+    if (!input) return;
+    input.focus();
+    if (typeof input.showPicker === "function") {
+      input.showPicker();
+    }
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
     setErrorMessage("");
 
     try {
+      const payload = {
+        ...formData,
+        businessType: formData.category,
+      };
+
       const response = await fetch(`${apiBaseUrl}/api/demo-requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const result = await response.json();
@@ -115,13 +139,21 @@ function RequestDemo() {
           </p>
 
           {submitted ? (
-            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800">
-              Thank you! Your demo request has been received.
+            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-relaxed text-emerald-800">
+              <p className="font-semibold">Thank you for submitting your request.</p>
+              <p className="mt-2">
+                We will contact you within 1 to 2 business days. For further queries, you can contact our
+                support team at{" "}
+                <a href="mailto:skdev3@gmail.com" className="font-medium underline">
+                  skdev3@gmail.com
+                </a>
+                .
+              </p>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="mt-6 grid gap-4">
+            <form onSubmit={onSubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {errorMessage ? (
-                <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+                <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700 sm:col-span-2">
                   {errorMessage}
                 </div>
               ) : null}
@@ -133,7 +165,7 @@ function RequestDemo() {
                   value={formData.fullName}
                   onChange={onFieldChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
+                  className={inputClass}
                 />
               </label>
 
@@ -145,7 +177,19 @@ function RequestDemo() {
                   value={formData.email}
                   onChange={onFieldChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
+                  className={inputClass}
+                />
+              </label>
+
+              <label className="text-sm font-medium">
+                Phone
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={onFieldChange}
+                  placeholder="+1 555 123 4567"
+                  className={inputClass}
                 />
               </label>
 
@@ -157,66 +201,92 @@ function RequestDemo() {
                   value={formData.companyName}
                   onChange={onFieldChange}
                   required
-                  className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
+                  className={inputClass}
                 />
               </label>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <label className="text-sm font-medium">
-                  Business Type
-                  <select
-                    name="businessType"
-                    value={formData.businessType}
-                    onChange={onFieldChange}
-                    className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
-                  >
-                    {businessTypes.map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="text-sm font-medium">
-                  Team / project scale
-                  <input
-                    type="text"
-                    name="teamSize"
-                    value={formData.teamSize}
-                    onChange={onFieldChange}
-                    placeholder="e.g., 8 active projects, 200 field staff"
-                    className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
-                  />
-                </label>
-              </div>
-
               <label className="text-sm font-medium">
-                Preferred Demo Date
-                <input
-                  type="date"
-                  name="preferredDate"
-                  value={formData.preferredDate}
+                Category
+                <select
+                  name="category"
+                  value={formData.category}
                   onChange={onFieldChange}
-                  className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
+                  required
+                  className={inputClass}
+                >
+                  {categoryOptions.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="text-sm font-medium">
+                Number of branches
+                <input
+                  type="number"
+                  name="branchCount"
+                  min={1}
+                  required
+                  value={formData.branchCount}
+                  onChange={onFieldChange}
+                  placeholder="e.g., 5"
+                  className={inputClass}
                 />
               </label>
 
               <label className="text-sm font-medium">
+                Team / project scale
+                <input
+                  type="text"
+                  name="teamSize"
+                  value={formData.teamSize}
+                  onChange={onFieldChange}
+                  placeholder="e.g., 8 active projects, 200 field staff"
+                  className={inputClass}
+                />
+              </label>
+
+              <label className="flex flex-col text-sm font-medium">
+                Preferred Demo Date
+                <div className="relative mt-1 h-10">
+                  <input
+                    ref={preferredDateInputRef}
+                    type="date"
+                    name="preferredDate"
+                    value={formData.preferredDate}
+                    onChange={onFieldChange}
+                    onClick={openPreferredDatePicker}
+                    className="h-full w-full rounded-lg border border-bm-border bg-bm-bg px-3 pr-10 text-sm text-white focus:border-bm-accent focus:outline-none [&::-webkit-calendar-picker-indicator]:opacity-0"
+                  />
+                  <button
+                    type="button"
+                    onClick={openPreferredDatePicker}
+                    aria-label="Open calendar"
+                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center text-bm-muted hover:text-white"
+                  >
+                    📅
+                  </button>
+                </div>
+              </label>
+
+              <label className="text-sm font-medium sm:col-span-2">
                 Goals and Requirements
                 <textarea
                   name="goals"
                   rows={4}
                   value={formData.goals}
                   onChange={onFieldChange}
-                  placeholder="Share your current challenges and objectives."
-                  className="mt-1 w-full rounded-lg border border-bm-border bg-bm-bg px-3 py-2 text-white focus:border-bm-accent focus:outline-none"
+                  placeholder="Share your current challenges and objectives. (optional)"
+                  className={textareaClass}
                 />
               </label>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-2 rounded-lg bg-bm-accent px-5 py-3 text-sm font-semibold text-bm-bg transition hover:bg-sky-300"
+                className="mt-2 rounded-lg bg-bm-accent px-5 py-3 text-sm font-semibold text-bm-bg transition hover:bg-sky-300 sm:col-span-2"
               >
                 {submitting ? "Submitting..." : "Submit Demo Request"}
               </button>

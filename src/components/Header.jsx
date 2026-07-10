@@ -6,7 +6,7 @@ import { navLinks } from "../data/siteContent";
 const portalOrigin = (() => {
   const fromEnv = import.meta.env.VITE_PORTAL_ORIGIN?.trim();
   if (fromEnv) return fromEnv.replace(/\/$/, "");
-  if (import.meta.env.DEV) return "http://localhost:5174";
+  if (import.meta.env.DEV) return "http://localhost:5173";
   return "";
 })();
 const loginUrl = portalOrigin ? `${portalOrigin}/login` : "#";

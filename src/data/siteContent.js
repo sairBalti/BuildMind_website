@@ -53,10 +53,11 @@ export const images = {
   ],
 };
 
+/** Marketing stats aligned with shipped product capabilities (see fleetBack automation + reports). */
 export const stats = [
-  { label: "On-time project delivery", value: "28%", trend: "avg. improvement" },
-  { label: "Equipment idle-time reduction", value: "19%", trend: "fleet-wide" },
-  { label: "Automated operational decisions", value: "1.2M+", trend: "per year" },
+  { label: "ERP modules live today", value: "9+", trend: "projects → finance" },
+  { label: "Progress report cadence", value: "3×", trend: "daily · weekly · monthly" },
+  { label: "Schedule risk scoring", value: "Rules", trend: "persisted per project" },
 ];
 
 export const features = [
@@ -92,32 +93,32 @@ export const features = [
 
 export const aiIntegrations = [
   {
-    name: "Schedule Risk Engine",
+    name: "Schedule variance alerts",
     description:
-      "Flags delayed milestones and recommends re-sequencing before deadlines slip.",
-    metric: "14 days",
-    metricLabel: "avg. early warning",
+      "Rules-based detection of overdue tasks, delayed milestones, and end-date slippage — surfaced in the command center.",
+    metric: "Live",
+    metricLabel: "in production",
   },
   {
-    name: "Workforce Optimizer",
+    name: "Workforce & shifts",
     description:
-      "Balances labor capacity with task priorities and compliance requirements.",
-    metric: "22%",
-    metricLabel: "overtime reduction",
+      "Shift scheduling, attendance, and task assignment with role-based access for field teams.",
+    metric: "Live",
+    metricLabel: "in production",
   },
   {
-    name: "Equipment Utilization Model",
+    name: "Equipment tracking",
     description:
-      "Predicts idle equipment and suggests redeployment across projects.",
-    metric: "31%",
-    metricLabel: "better utilization",
+      "Assignments, maintenance dates, and utilization signals across active job sites.",
+    metric: "Live",
+    metricLabel: "in production",
   },
   {
-    name: "Budget Variance Hub",
+    name: "Budget & finance KPIs",
     description:
-      "Surfaces cost overruns early using expense, invoice, and procurement signals.",
-    metric: "8%",
-    metricLabel: "cost variance caught sooner",
+      "Budget utilization, expenses, and invoices with automated low-stock and budget warnings.",
+    metric: "Live",
+    metricLabel: "in production",
   },
 ];
 

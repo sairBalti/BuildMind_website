@@ -8,6 +8,21 @@ import Pricing from "./pages/Pricing";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
 import RequestDemo from "./pages/RequestDemo";
+import usePageVisitTracking from "./hooks/usePageVisitTracking";
+
+function AppRoutes() {
+  usePageVisitTracking();
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/pricing" element={<Pricing />} />
+      <Route path="/blog" element={<Blog />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/request-demo" element={<RequestDemo />} />
+    </Routes>
+  );
+}
 
 function App() {
   return (
@@ -15,14 +30,7 @@ function App() {
       <div className="flex min-h-screen flex-col bg-bm-bg">
         <Header />
         <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/request-demo" element={<RequestDemo />} />
-          </Routes>
+          <AppRoutes />
         </main>
         <Footer />
       </div>
