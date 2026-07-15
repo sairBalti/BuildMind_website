@@ -142,7 +142,7 @@ External clients get a dedicated login (not the internal ERP):
 
 ---
 
-## This repository (`fleetWebsite`)
+## This repository (`BuildMind_Website`)
 
 | Item | Description |
 |------|-------------|
@@ -155,9 +155,9 @@ External clients get a dedicated login (not the internal ERP):
 
 | Repo | Visibility | Purpose |
 |------|------------|---------|
-| Portal (`fleetFront`) | Private | React app your construction team uses daily |
-| API (`fleetBack`) | Private | Node.js + MySQL backend, automation, AI |
-| **Website (`fleetWebsite`)** | **Public** | Marketing & product information (this repo) |
+| Portal (`BuildMind_front`) | Private | React app your construction team uses daily |
+| API (`BuildMind_backend`) | Private | Node.js + MySQL backend, automation, AI |
+| **Website (`BuildMind_Website`)** | **Public** | Marketing & product information (this repo) |
 
 > Licensed clients receive access to private portal and API repositories. Product documentation for implementations lives in those repos.
 
@@ -189,7 +189,7 @@ Replace with live staging screenshots when preparing client-specific proposals.
 
 ```bash
 npm install
-cp .env.example .env
+cp .env
 npm run dev
 ```
 
@@ -230,7 +230,7 @@ Set both env vars to your deployed API and portal origins.
 ## Branding
 
 - **Product name:** BuildMind Construction ERP  
-- **Marketing site:** This repository (`fleetWebsite`)  
+- **Marketing site:** This repository (`BuildMind_website`)  
 - **Tagline:** AI-powered construction operations — projects, workforce, materials, and equipment in one platform  
 
 ---
