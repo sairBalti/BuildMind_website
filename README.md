@@ -20,7 +20,7 @@ BuildMind is an **automation-first construction ERP** for general contractors, b
 | **Site engineer / supervisor** | Tasks, inspections, attendance, materials usage |
 | **Accountant** | Budgets, invoices, payments, aging, general ledger |
 | **Field worker** | Shift schedule, attendance, assigned tasks |
-| **Client** | Separate client portal — progress, approvals, invoices |
+| **Client** | Separate client portal — progress, approvals, invoices |  
 
 ---
 
