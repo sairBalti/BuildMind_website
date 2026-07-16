@@ -208,7 +208,13 @@ The **Request Demo** page submits to:
 
 ### Production (e.g. Vercel)
 
-Set both env vars to your deployed API and portal origins.
+1. In the Vercel project for **fleetWebsite**, add:
+   - `VITE_API_BASE_URL` = your live API origin, e.g. `https://yourdomain.com` (**HTTPS**, no `/api` suffix)
+   - `VITE_PORTAL_ORIGIN` = your portal URL
+2. **Redeploy** after saving env vars (Vite bakes `VITE_*` at build time).
+3. Quick check: open `https://YOUR_API/health` (or `/api/demo-requests` OPTIONS) in a browser — it must load over HTTPS.
+
+If submit shows **Failed to fetch**, the marketing site cannot reach that API URL (missing env, HTTP mixed content, or API down).
 
 ---
 

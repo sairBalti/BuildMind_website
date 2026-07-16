@@ -1,15 +1,6 @@
-const VISITOR_KEY = "fleet_visitor_key";
+import { resolveApiBase } from "./apiBase";
 
-function resolveApiBase() {
-  let fromEnv = import.meta.env.VITE_API_BASE_URL?.trim();
-  if (fromEnv) {
-    fromEnv = fromEnv.replace(/\/$/, "");
-    if (fromEnv.endsWith("/api")) return fromEnv;
-    return `${fromEnv}/api`;
-  }
-  if (import.meta.env.DEV) return "http://localhost:5002/api";
-  return "/api";
-}
+const VISITOR_KEY = "fleet_visitor_key";
 
 export function getOrCreateVisitorKey() {
   let key = localStorage.getItem(VISITOR_KEY);

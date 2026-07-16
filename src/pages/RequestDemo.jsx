@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { isNetworkFetchError, resolveApiOrigin } from "../utils/apiBase";
 
 const categoryOptions = ["All", "Sector Focus", "Legal Structure"];
 
@@ -27,16 +28,7 @@ function RequestDemo() {
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const apiBaseUrl = (() => {
-    let fromEnv = import.meta.env.VITE_API_BASE_URL?.trim();
-    if (fromEnv) {
-      fromEnv = fromEnv.replace(/\/$/, "");
-      if (fromEnv.endsWith("/api")) return fromEnv.slice(0, -4);
-      return fromEnv;
-    }
-    if (import.meta.env.DEV) return "http://localhost:5002";
-    return "";
-  })();
+  const apiOrigin = resolveApiOrigin();
 
   const onFieldChange = (event) => {
     const { name, value } = event.target;
@@ -57,13 +49,33 @@ function RequestDemo() {
     setSubmitting(true);
     setErrorMessage("");
 
+    if (!apiOrigin) {
+      setErrorMessage(
+        "Demo form is not connected to the API. Set VITE_API_BASE_URL in Vercel (your HelioHost API origin, https://…) and redeploy."
+      );
+      setSubmitting(false);
+      return;
+    }
+
+    if (
+      typeof window !== "undefined" &&
+      window.location.protocol === "https:" &&
+      apiOrigin.startsWith("http:")
+    ) {
+      setErrorMessage(
+        "API URL must use HTTPS on production (mixed content blocked). Set VITE_API_BASE_URL to https://your-api-host"
+      );
+      setSubmitting(false);
+      return;
+    }
+
     try {
       const payload = {
         ...formData,
         businessType: formData.category,
       };
 
-      const response = await fetch(`${apiBaseUrl}/api/demo-requests`, {
+      const response = await fetch(`${apiOrigin}/api/demo-requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +83,16 @@ function RequestDemo() {
         body: JSON.stringify(payload),
       });
 
-      const result = await response.json();
+      let result = {};
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error(
+          response.ok
+            ? "Unexpected response from the API."
+            : `API error (${response.status}). Check that ${apiOrigin}/api/demo-requests is reachable.`
+        );
+      }
 
       if (!response.ok || !result.success) {
         throw new Error(result.message || "Unable to submit demo request right now.");
@@ -80,7 +101,13 @@ function RequestDemo() {
       setSubmitted(true);
       setFormData(initialFormData);
     } catch (error) {
-      setErrorMessage(error.message || "Something went wrong while submitting the form.");
+      if (isNetworkFetchError(error)) {
+        setErrorMessage(
+          `Cannot reach the API at ${apiOrigin}. Confirm the backend is online, uses HTTPS, and allows this site (CORS).`
+        );
+      } else {
+        setErrorMessage(error.message || "Something went wrong while submitting the form.");
+      }
     } finally {
       setSubmitting(false);
     }
