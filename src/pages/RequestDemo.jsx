@@ -171,8 +171,8 @@ function RequestDemo() {
               <p className="mt-2">
                 We will contact you within 1 to 2 business days. For further queries, you can contact our
                 support team at{" "}
-                <a href="mailto:skdev3@gmail.com" className="font-medium underline">
-                  skdev3@gmail.com
+                <a href="mailto:sktechdev3@gmail.com" className="font-medium underline">
+                  sktechdev3@gmail.com
                 </a>
                 .
               </p>
